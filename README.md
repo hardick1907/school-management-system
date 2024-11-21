@@ -1,10 +1,10 @@
-# School Management System API 🏫
+# School Management System API
 
 A powerful and scalable backend for managing students, teachers, classes, and administrators in a school system. This Node.js application leverages Express, MongoDB, and Cloudinary to deliver a robust API for modern school operations.
 
 ---
 
-## Features ✨
+## Features
 
 - **Admin Management**: Register and login administrators with secure authentication.
 - **Teacher Management**: CRUD operations for teachers, with support for profile images via Cloudinary.
@@ -35,13 +35,13 @@ A powerful and scalable backend for managing students, teachers, classes, and ad
 ### Installation
 
 1. Clone the repository:
-   git clone https://github.com/your-username/school-management-system.git
+   git clone https://github.com/hardick1907/school-management-system.git
 2. Navigate to the project directory:
    cd school-management-system
 3. Install dependencies:
    npm install
 4. Start the development server:
-   npm run dev
+   npm run dev/ nodemon index.js (if you have nodemon)
 
 ---
 
