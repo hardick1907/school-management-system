@@ -62,3 +62,21 @@ export const updateClass = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+export const deleteClass = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const classToDelete = await Class.findById(id);
+    if (!classToDelete) {
+      return res.status(404).json({ success: false, message: 'Class not found' });
+    }
+
+    classToDelete.deleted = true;
+    await classToDelete.save();
+    res.json({ success: true, message: 'Class soft deleted' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

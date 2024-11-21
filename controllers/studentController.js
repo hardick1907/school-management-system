@@ -33,3 +33,64 @@ export const getAllStudents = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
+export const getStudentById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const student = await Student.findById(id).populate('classId');
+    if (!student || student.deleted) {
+      return res.status(404).json({ success: false, message: 'Student not found or deleted' });
+    }
+    res.json({ success: true, student });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+export const updateStudent = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, classId } = req.body;
+  let profileImageUrl;
+
+  if (req.file) {
+    profileImageUrl = await uploadToCloudinary(req.file, 'students');
+  }
+
+  try {
+    const student = await Student.findById(id);
+    if (!student || student.deleted) {
+      return res.status(404).json({ success: false, message: 'Student not found or deleted' });
+    }
+
+    student.name = name || student.name;
+    student.email = email || student.email;
+    student.classId = classId || student.classId;
+    student.profileImageUrl = profileImageUrl || student.profileImageUrl;
+
+    await student.save();
+    res.json({ success: true, student });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+
+export const deleteStudent = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const student = await Student.findById(id);
+    if (!student || student.deleted) {
+      return res.status(404).json({ success: false, message: 'Student not found or already deleted' });
+    }
+
+    student.deleted = true;
+    await student.save();
+    res.json({ success: true, message: 'Student soft deleted' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

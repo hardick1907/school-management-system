@@ -1,6 +1,5 @@
 import Admin from '../models/Admin.js';
 
-// Register new admin user
 export const registerAdmin = async (req, res) => {
   const { name, email, password } = req.body;
 
